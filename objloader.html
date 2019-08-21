@@ -41,7 +41,7 @@
 		<input type="text" id="readModel" value="shark">
 	</div>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/107/three.min.js"></script>
 	<script src="https://threejs.org/examples/js/controls/OrbitControls.js">
 	</script>
 	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -86,7 +86,7 @@ function init() {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
-  renderer.setClearColor (0x888888);
+  renderer.setClearColor (0xffffff);
 
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000);
   camera.position.z = 100;
@@ -99,9 +99,12 @@ function init() {
   var ambient = new THREE.AmbientLight(0x444444);
   scene.add(ambient);
 	
-  gridxz = new THREE.GridHelper (200, 20,'red','white');
+  gridxz = new THREE.GridHelper (200, 20,'red','black');
   scene.add (gridxz);
-	
+
+  let axis = new THREE.AxisHelper (20);
+ // scene.add (axis);
+  	
   var directionalLight = new THREE.DirectionalLight(0xffffff);
   directionalLight.position.set(0, 0, 1).normalize();
   scene.add(directionalLight);
@@ -150,9 +153,11 @@ function readModel (modelName, targetSize=40) {
     objLoader.load(modelName+'.obj', function(object) {
 		
 		let theObject =  unitize (object, targetSize);
-		theObject.add ( new THREE.BoxHelper (theObject) )
+		//theObject.add ( new THREE.BoxHelper (theObject) )
 		theObject.name = 'OBJ'
 		scene.add (theObject);
+		
+		theObject.setRotationFromEuler (new THREE.Euler (3.1416/2, 0, -3.1416/2, 'ZYX'))
 
     }, onProgress, onError);
 
