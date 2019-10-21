@@ -38,7 +38,7 @@
 	<div id="info">
 	  <a href="http://threejs.org" target="_blank">three.js</a> - OBJLoader + MTLLoader
 	  <br>Model:
-		<input type="text" id="readModel" value="shark">
+		<input type="text" id="readModel" value="toycar">
 	</div>
 
 	<script src="https://threejs.org/build/three.min.js"></script>
@@ -65,12 +65,22 @@ var bs;
 var modelName;
 var theModel;
 
+/*
 $('#readModel').change( function() {
 	modelName = $(this).val();
 	console.log ('model: ' + modelName)
     scene.remove ( scene.getObjectByName ('OBJ') )
 	readModel (modelName);
   	   
+});
+*/
+$('#readModel').on ('keypress', function (e) {
+   if (e.which === 13) {
+	modelName = $(this).val();
+	console.log ('model: ' + modelName)
+    scene.remove ( scene.getObjectByName ('OBJ') )
+	readModel (modelName);
+   }   
 });
 
 init();
@@ -102,7 +112,7 @@ function init() {
   gridxz = new THREE.GridHelper (200, 20,'red','black');
   scene.add (gridxz);
 
-  let axis = new THREE.AxisHelper (20);
+  let axis = new THREE.AxesHelper (20);
  // scene.add (axis);
   	
   var directionalLight = new THREE.DirectionalLight(0xffffff);
